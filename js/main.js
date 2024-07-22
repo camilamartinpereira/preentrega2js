@@ -1,7 +1,7 @@
 class Cancion {
     constructor(nombre, duracion) {
         this.nombre = nombre;
-        this.duracion = Math.round(duracion);
+        this.duracion = Math.round(duracion); // Duración en minutos, redondeada
     }
 
     pluralizarMinutos() {
@@ -43,7 +43,7 @@ class Playlist {
 
             do {
                 numeroCancion = prompt("Canciones en la playlist " + this.nombre + ":\n" + listaCanciones + "\n\nIngrese el número de la canción que desea eliminar (o 0 para volver):");
-                if (numeroCancion === "0") return; 
+                if (numeroCancion === "0") return; // Volver al menú anterior
             } while (isNaN(numeroCancion) || numeroCancion < 1 || numeroCancion > this.canciones.length);
 
             numeroCancion = parseInt(numeroCancion);
@@ -75,7 +75,7 @@ class SimuladorPlaylists {
             const nombrePlaylist = prompt("Ingrese el nombre de la playlist " + (i + 1) + ":");
             let estadoAnimo;
             do {
-                estadoAnimo = prompt("Ingrese un estado de ánimo con el cual escuchar " + nombrePlaylist + ":");
+                estadoAnimo = prompt("Ingrese el estado de ánimo de la playlist " + nombrePlaylist + ":");
             } while (/^\d+$/.test(estadoAnimo));
 
             this.playlists.push(new Playlist(nombrePlaylist, estadoAnimo));
@@ -109,7 +109,7 @@ class SimuladorPlaylists {
                         "1️⃣ Agregar canción\n" +
                         "2️⃣ Quitar canción\n" +
                         "3️⃣ Ver lista de canciones\n" +
-                        (index < totalPlaylists - 1 ? "4️⃣ SIGUIENTE PLAYLIST" : "4️⃣ MENU PRINCIPAL") +
+                        (index < totalPlaylists - 1 ? "4️⃣ Ir a siguiente playlist" : "4️⃣ Volver al menú principal") +
                         "\n\n0️⃣ Volver al menú principal");
 
                     switch (opcionMenu) {
@@ -148,7 +148,7 @@ class SimuladorPlaylists {
         do {
             opcionMenu = prompt("¡Hola " + this.nombreUsuario + "! 🌟 Menú Principal 🌟\n\n" +
                 this.playlists.map((playlist, index) => (index + 1) + "️⃣ " + playlist.nombre).join("\n") +
-                "\n\nElige una opción del 1) al " + this.playlists.length + ") para gestionar una playlist, \n" + (this.playlists.length + 1) + ") para buscar playlists, \n" + (this.playlists.length + 2) + ") para agregar una nueva playlist o \n" + (this.playlists.length + 3) + ") para salir.");
+                "\n\nElige una opción del 1 al " + this.playlists.length + " para gestionar una playlist, " + (this.playlists.length + 1) + " para buscar playlists, " + (this.playlists.length + 2) + " para agregar una nueva playlist o " + (this.playlists.length + 3) + " para salir.");
 
             const opcionNum = parseInt(opcionMenu);
             if (opcionNum > 0 && opcionNum <= this.playlists.length) {
@@ -158,8 +158,7 @@ class SimuladorPlaylists {
             } else if (opcionNum === this.playlists.length + 2) {
                 this.agregarPlaylist();
             } else if (opcionNum === this.playlists.length + 3) {
-                alert("Gracias por usar el simulador de playlists musicales. ¡Te esperamos pronto!!");
-                return;
+                alert("Gracias por usar el simulador de playlists musicales. ¡Hasta luego!");
             } else {
                 alert("🚫 Opción no válida. Por favor, selecciona una opción válida.");
             }
@@ -200,8 +199,8 @@ class SimuladorPlaylists {
         let opcionMenu;
         do {
             opcionMenu = prompt("🔍 Buscar Playlists 🔍\n\n" +
-                "1️⃣ Buscar segun tu estado de ánimo\n" +
-                "2️⃣ Buscar por la duracion que deseas\n" +
+                "1️⃣ Buscar por estado de ánimo\n" +
+                "2️⃣ Buscar por duración aproximada\n" +
                 "3️⃣ Volver al menú principal");
 
             switch (opcionMenu) {
@@ -242,7 +241,7 @@ class SimuladorPlaylists {
             return (Math.abs(curr.duracionTotal - duracionAproximada) < Math.abs(prev.duracionTotal - duracionAproximada) ? curr : prev);
         });
 
-        alert("La playlist con la duración más cercana a la deseada es:\n" + playlistCercana.nombre + " - Duración: " + playlistCercana.duracionTotal + " minutos - Estado de ánimo: " + playlistCercana.estadoAnimo);
+        alert("La playlist con la duración más cercana es:\n" + playlistCercana.nombre + " - Duración: " + playlistCercana.duracionTotal + " minutos - Estado de ánimo: " + playlistCercana.estadoAnimo);
     }
 
     mostrarPlaylistsFiltradas(playlistsFiltradas) {
@@ -255,10 +254,10 @@ class SimuladorPlaylists {
     }
 
     agregarPlaylist() {
-        const nombrePlaylist = prompt("Ingrese el nombre de la nueva playlist:");
+        const nombrePlaylist = prompt("Ingrese un nombre para identificr de la nueva playlist:");
         let estadoAnimo;
         do {
-            estadoAnimo = prompt("Ingrese el estado de ánimo para la nueva playlist:");
+            estadoAnimo = prompt("Para poder hacerte reoomendaciones luego te pedimos que selecciones un estado de ánimo para la nueva playlist:");
         } while (/^\d+$/.test(estadoAnimo));
 
         if (nombrePlaylist && estadoAnimo) {
@@ -271,11 +270,11 @@ class SimuladorPlaylists {
 }
 
 function iniciarSimulador() {
-    const nombreUsuario = prompt("¡Hola! 😊 Ingresa tu nombre:");
+    const nombreUsuario = prompt("¡Hola! 😊 Te damos la bienvenida al creador y buscador de Playlist Musiales.\nIngresa tu nombre por favor:");
     let cantidadPlaylists;
     do {
-        cantidadPlaylists = prompt("¿Cuántas playlists deseas crear?");
-    } while (isNaN(cantidadPlaylists) || cantidadPlaylists <= 0 || !Number.isInteger(parseFloat(cantidadPlaylists)));
+        cantidadPlaylists = prompt("Primero debemos saber cuántas playlists deseas crear (puedes agregar mas luego)");
+    } while (isNaN(cantidadPlaylists) || cantidadPlaylists <= 0);
 
     cantidadPlaylists = parseInt(cantidadPlaylists);
 
