@@ -75,7 +75,7 @@ class SimuladorPlaylists {
             const nombrePlaylist = prompt("Ingrese el nombre de la playlist " + (i + 1) + ":");
             let estado
             do {
-                estadoAnimo = prompt("Para poder darte recomendaciones luego te pedimos que le vincules un estado de animo /n Ejemplo: Felicidad, Tristeza, Melancolia, Festejo a" + nombrePlaylist + "- :");
+                estadoAnimo = prompt("Para poder darte recomendaciones luego te pedimos que le vincules un estado de animo \n Ejemplo: Felicidad, Tristeza, Melancolia, Festejo \n para tu playlist gi" + nombrePlaylist + ":");
             } while (/^\d+$/.test(estadoAnimo));
 
             this.playlists.push(new Playlist(nombrePlaylist, estadoAnimo));
