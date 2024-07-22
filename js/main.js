@@ -73,10 +73,10 @@ class SimuladorPlaylists {
 
         for (let i = 0; i < cantidadPlaylists; i++) {
             const nombrePlaylist = prompt("Ingrese el nombre de la playlist " + (i + 1) + ":");
-            let estado
+            let estadoAnimo;
             do {
-                estadoAnimo = prompt("Para poder darte recomendaciones luego te pedimos que le vincules un estado de animo \n Ejemplo: Felicidad, Tristeza, Melancolia, Festejo \n para tu playlist gi" + nombrePlaylist + ":");
-            } while (/^\d+$/.test(estadoAnimo));
+                estadoAnimo = prompt("Para poder darte recomendaciones luego te pedimos que le vincules un estado de ánimo \nEjemplo: Felicidad, Tristeza, Melancolía, Festejo\npara tu playlist " + nombrePlaylist + ":");
+            } while (/^\d+$/.test(estadoAnimo) || estadoAnimo.trim() === "");
 
             this.playlists.push(new Playlist(nombrePlaylist, estadoAnimo));
         }
@@ -148,7 +148,10 @@ class SimuladorPlaylists {
         do {
             opcionMenu = prompt("¡Hola " + this.nombreUsuario + "! 🌟 Menú Principal 🌟\n\n" +
                 this.playlists.map((playlist, index) => (index + 1) + "️⃣ " + playlist.nombre).join("\n") +
-                "\n\nElige una opción del 1 al " + this.playlists.length + " para gestionar una playlist, " + (this.playlists.length + 1) + " para buscar playlists, " + (this.playlists.length + 2) + " para agregar una nueva playlist o " + (this.playlists.length + 3) + " para salir.");
+                "\n\nElige una opción del 1 al " + this.playlists.length + " para gestionar una playlist, " + 
+                (this.playlists.length + 1) + " para buscar playlists, " + 
+                (this.playlists.length + 2) + " para agregar una nueva playlist o " + 
+                (this.playlists.length + 3) + " para salir.");
 
             const opcionNum = parseInt(opcionMenu);
             if (opcionNum > 0 && opcionNum <= this.playlists.length) {
@@ -223,7 +226,7 @@ class SimuladorPlaylists {
         let estadoAnimo;
         do {
             estadoAnimo = prompt("Ingrese el estado de ánimo para buscar playlists. Opciones: " + estadosAnimo + ":");
-        } while (/^\d+$/.test(estadoAnimo));
+        } while (/^\d+$/.test(estadoAnimo) || estadoAnimo.trim() === "");
 
         const playlistsFiltradas = this.playlists.filter(playlist => playlist.estadoAnimo.toLowerCase().includes(estadoAnimo.toLowerCase()));
         this.mostrarPlaylistsFiltradas(playlistsFiltradas);
@@ -254,11 +257,11 @@ class SimuladorPlaylists {
     }
 
     agregarPlaylist() {
-        const nombrePlaylist = prompt("Ingrese un nombre para identificr de la nueva playlist:");
+        const nombrePlaylist = prompt("Ingrese un nombre para identificar la nueva playlist:");
         let estadoAnimo;
         do {
-            estadoAnimo = prompt("Para poder hacerte reoomendaciones luego te pedimos que selecciones un estado de ánimo para la nueva playlist:");
-        } while (/^\d+$/.test(estadoAnimo));
+            estadoAnimo = prompt("Para poder hacerte recomendaciones luego te pedimos que selecciones un estado de ánimo para la nueva playlist:");
+        } while (/^\d+$/.test(estadoAnimo) || estadoAnimo.trim() === "");
 
         if (nombrePlaylist && estadoAnimo) {
             this.playlists.push(new Playlist(nombrePlaylist, estadoAnimo));
@@ -273,8 +276,8 @@ function iniciarSimulador() {
     const nombreUsuario = prompt("¡Hola! 😊 Te damos la bienvenida al creador y buscador de Playlist Musicales.\nIngresa tu nombre por favor:");
     let cantidadPlaylists;
     do {
-        cantidadPlaylists = prompt("Primero debemos saber cuántas playlists deseas crear (puedes agregar mas luego)");
-    } while (isNaN(cantidadPlaylists) || cantidadPlaylists <= 0);
+        cantidadPlaylists = prompt("Primero debemos saber cuántas playlists deseas crear (puedes agregar más luego):");
+    } while (isNaN(cantidadPlaylists) || cantidadPlaylists <= 0 || !Number.isInteger(Number(cantidadPlaylists)));
 
     cantidadPlaylists = parseInt(cantidadPlaylists);
 
